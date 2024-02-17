@@ -1,0 +1,1 @@
+double minc(double a[], int n);
