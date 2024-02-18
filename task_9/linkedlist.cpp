@@ -2,7 +2,23 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
-LinkedList::LinkedList() : head(nullptr), tail(nullptr) {}
+fhdo_pk2::LinkedList::LinkedList() : head(nullptr), tail(nullptr) {}
+
+using namespace fhdo_pk2;
+LinkedList::ListIterator::ListIterator(): current{nullptr}{
+}
+
+LinkedList::ListIterator::ListIterator(const LinkedList &list): current{list.head}{}
+
+bool LinkedList::ListIterator::hasNext(){
+    return current != nullptr;
+};
+
+const char* LinkedList::ListIterator::next(){
+    const char* s = current->value;
+    current = current->next;
+    return s;
+}
 
 LinkedList::~LinkedList() {
     element *pointer = head;
@@ -36,7 +52,7 @@ int LinkedList::append(const char *text) {
     return 1; 
 }
 
-int LinkedList::insert(const char *text, int p) {
+int LinkedList::insert(const char* text, int p){
     if (this->head == nullptr)
     {
         append(text);
@@ -135,11 +151,15 @@ int LinkedList::index_of(const char *text){
 }
 
 void LinkedList::visit_all(void (*work)(const char* t)){
-    element *pointer = head;
-    while(pointer != nullptr){
-        work(pointer->value);
-        pointer = pointer->next;
-    }
+    //element *pointer = head;
+   // while(pointer != nullptr){
+    //    work(pointer->value);
+    //    pointer = pointer->next;
+   // }
+   LinkedList::ListIterator *iter = this->iterator();
+   while(iter->hasNext()){
+    work(iter->next());
+   }
 }
 
 const char *LinkedList::first(){
@@ -147,4 +167,9 @@ const char *LinkedList::first(){
 }
 const char *LinkedList::last(){
     return tail->value;
+}
+
+LinkedList::ListIterator* LinkedList::iterator(){
+    ListIterator* iter = new ListIterator(*this);
+    return  iter;
 }

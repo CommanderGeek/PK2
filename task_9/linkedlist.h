@@ -1,3 +1,4 @@
+namespace fhdo_pk2{
 class LinkedList{
 private:
 struct element{
@@ -7,6 +8,21 @@ struct element{
 };
 element* head;
 element* tail;
+class Iterator{
+    virtual bool hasNext() = 0;
+    virtual const char* next() = 0; 
+};
+class ListIterator : Iterator{
+    private:
+    element *current;
+    public:
+    ListIterator();
+    ListIterator(const LinkedList &list);
+    ~ListIterator();
+    public:
+    bool hasNext() override;
+    const char* next() override; 
+};
 
 public:
 LinkedList();
@@ -20,4 +36,6 @@ int index_of(const char *text);
 const char *first();
 const char *last();
 void visit_all(void (*work)(const char* t));
+ListIterator* iterator();
 };
+}
