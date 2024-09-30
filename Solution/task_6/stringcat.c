@@ -10,7 +10,7 @@ char *stringcat (const char* str1, const char*str2){
         i++;
     }
     int j = 0;
-while(*(str2+j) != '\0'){
+    while(*(str2+j) != '\0'){
         *(string+i+j) = *(str2+j);
         j++;
     }
